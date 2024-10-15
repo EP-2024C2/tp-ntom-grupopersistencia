@@ -1,5 +1,6 @@
 const { Productos } = require('../models')
 const middleware = {}
+
 const validateIdProducto = async (req, res, next)=>{
     const id = req.params.id
     const producto = await Productos.findByPk(id)
