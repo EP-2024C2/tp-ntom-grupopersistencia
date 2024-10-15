@@ -45,7 +45,7 @@ controllerComponentes.updateComponentes = updateComponentes
 const deleteById = async (req,res) => {
     const id = req.params.id
     const componente = await Componentes.destroy({where: {id}})
-    res.status(204).json({message: `Componente ${id} eliminado exitosamente`})
+    res.status(200).json({message: `Componente ${componente} eliminado exitosamente`})
 }
 controllerComponentes.deleteById = deleteById
 

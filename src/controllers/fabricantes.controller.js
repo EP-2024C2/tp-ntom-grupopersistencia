@@ -45,7 +45,7 @@ controllerFabricantes.updateFabricantes = updateFabricantes
 const deleteById = async (req,res) => {
     const id = req.params.id
     const fabricantes = await Fabricantes.destroy({where: {id}})
-    res.status(204).json({message: `Fabricante ${id} eliminado exitosamente`})
+    res.status(200).json({message: `Fabricante ${fabricantes} eliminado exitosamente`})
 }
 controllerFabricantes.deleteById = deleteById
 

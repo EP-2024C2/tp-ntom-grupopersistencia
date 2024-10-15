@@ -14,7 +14,7 @@ route.get('/componentes/:id',
 
 route.post('/componentes', 
     schemaValidator(componenteSchema),
-    componentesControllers.validateIdComponentes 
+    componentesControllers.createComponentes 
 )
 
 route.put('/componentes/:id', 
