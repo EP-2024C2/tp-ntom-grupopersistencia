@@ -27,5 +27,9 @@ route.delete('/fabricantes/:id',
     fabricantesControllers.deleteById
     ) 
 
+route.get('/fabricantes/:id/productos', 
+    fabricantesMiddleware.validateIdFabricante,
+    fabricantesControllers.getProductosPorFabricante
+)
 
 module.exports = route

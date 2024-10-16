@@ -49,9 +49,11 @@ controller.updateProducto = updateProducto
 const deleteById = async (req,res) => {
     const id = req.params.id
     const producto = await Productos.destroy({where: {id}})
-    res.status(204).json({message: `Producto ${id} eliminado exitosamente`})
+    res.status(200).json({message: `Producto ${producto} eliminado exitosamente`})
 }
 
 controller.deleteById = deleteById
+
+
 
 module.exports = controller

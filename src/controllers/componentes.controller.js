@@ -1,4 +1,4 @@
-const {Componentes} = require ('../models')
+const {Componentes, Productos} = require ('../models')
 const controllerComponentes = {}
 
 
@@ -45,8 +45,40 @@ controllerComponentes.updateComponentes = updateComponentes
 const deleteById = async (req,res) => {
     const id = req.params.id
     const componente = await Componentes.destroy({where: {id}})
-    res.status(204).json({message: `Componente ${id} eliminado exitosamente`})
+    res.status(200).json({message: `Componente ${componente} eliminado exitosamente`})
 }
 controllerComponentes.deleteById = deleteById
+
+
+const getComponentesByProducto = async(req,res) => {
+    const productoId = req.params.id
+    const componentes = await Productos.findByPk(productoId,{
+        include: [{
+            model: Componentes
+        }]
+    })
+    res.status(200).json(componentes)
+}
+controllerComponentes.getComponentesByProducto = getComponentesByProducto
+
+const createComponente = async(req,res) => {
+    const {id, nombre, descripcion} = req.body
+    const idProducto = req.params.id
+    const producto = await Productos.findByPk(idProducto) 
+ 
+    const [componente, _ ] = await Componentes.findOrCreate(
+        {
+            where: {id: id || 0} , 
+            defaults: {
+                id: null,
+                nombre, 
+                descripcion
+            }
+        })
+        producto.addComponentes([componente])
+    res.status(201).json({message: 'Componente agregado al Producto'})
+}
+
+controllerComponentes.createComponente = createComponente
 
 module.exports = controllerComponentes

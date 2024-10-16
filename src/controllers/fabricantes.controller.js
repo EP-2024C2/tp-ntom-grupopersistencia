@@ -1,4 +1,4 @@
-const {Fabricantes} = require ('../models')
+const {Fabricantes, Productos} = require ('../models')
 const controllerFabricantes = {}
 
 
@@ -13,7 +13,11 @@ controllerFabricantes.getAllFabricantes = getAllFabricantes
 const getFabricanteById = async (req,res) => {
     const id = req.params.id
     const fabricante = await Fabricantes.findOne({
-        where: {id}
+        where: {id},
+        include: {
+            model: Productos,
+            as: 'Productos'
+        }
     })
     res.status(200).json(fabricante)
 }
@@ -45,8 +49,55 @@ controllerFabricantes.updateFabricantes = updateFabricantes
 const deleteById = async (req,res) => {
     const id = req.params.id
     const fabricantes = await Fabricantes.destroy({where: {id}})
-    res.status(204).json({message: `Fabricante ${id} eliminado exitosamente`})
+    res.status(200).json({message: `Fabricante ${fabricantes} eliminado exitosamente`})
 }
 controllerFabricantes.deleteById = deleteById
+
+const getFabricantesByProducto = async (req,res)=> {
+    const id = req.params.id
+    const producto = await Productos.findByPk(id,{
+        include: [{
+            model: Fabricantes
+        }]
+    })
+
+    res.status(200).json(producto)
+}
+
+controllerFabricantes.getFabricantesByProducto = getFabricantesByProducto
+
+const createFabricante = async(req,res) => {
+    const {id, nombre, direccion, numeroContacto, pathImgPerfil} = req.body
+    const idProducto = req.params.id
+    const producto = await Productos.findByPk(idProducto) 
+ 
+    const [fabricante, _ ] = await Fabricantes.findOrCreate(
+        {
+            where: {id: id || 0} , 
+            defaults: {
+                id: null,
+                nombre, 
+                direccion, 
+                numeroContacto,
+                pathImgPerfil
+            }
+        })
+        producto.addFabricantes([fabricante])
+    res.status(201).json({message: 'Fabricante agregado al Producto'})
+}
+
+controllerFabricantes.createFabricante = createFabricante
+
+
+const getProductosPorFabricante = async(req,res) =>{
+    const fabricanteId = req.params.id
+    const fabricante = await Fabricantes.findByPk(fabricanteId,{
+        include: [{
+            model: Productos
+        }]
+    })
+    res.status(200).json(fabricante)
+}
+controllerFabricantes.getProductosPorFabricante = getProductosPorFabricante
 
 module.exports = controllerFabricantes
