@@ -1,6 +1,5 @@
 const express = require('express')
 const routes = require('./routes')
-//const {genericMiddleware} = require('./middlewares')
 const db = require('./models')
 const PORT = 3000
 const app = express()
