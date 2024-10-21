@@ -13,7 +13,6 @@ app.use(routes.componentesRoute)
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, async() => {
-    console.log(PORT)
     console.log(`Aplicación iniciada en el puerto ${PORT}`)
     //db.sequelize.sync({force:true})
 })
