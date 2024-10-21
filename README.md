@@ -24,17 +24,21 @@ Ejecuta los siguientes comandos para correr la API en la máquina local.
 ### Pasos para la instalación y ejecución
 
 - Clonar el repositorio
+
   `git clone https://github.com/EP-2024C2/tp-ntom-grupopersistencia.git`
 
 - Instalar dependecias dentro del directorio del proyecto
+
   `npm i`
 
 - Configurar la variable de entorno
 
 - Inicializar el servidor
+
   `npm start`
 
-- Para entornos de desarrollo (nodemon) usar
+- Para entornos de desarrollo (como nodemon) usar
+
   `npm run dev`
 
 ## Modelo Relacional
