@@ -1,5 +1,4 @@
 require('dotenv').config(); 
-const PORT = process.env.PORT || 3000
 const express = require('express')
 const routes = require('./routes')
 const db = require('./models')
@@ -11,7 +10,10 @@ app.use(routes.productosRoute)
 app.use(routes.fabricantesRoute)
 app.use(routes.componentesRoute)
 
+const PORT = process.env.PORT || 3000
+
 app.listen(PORT, async() => {
+    console.log(PORT)
     console.log(`Aplicación iniciada en el puerto ${PORT}`)
     //db.sequelize.sync({force:true})
 })
