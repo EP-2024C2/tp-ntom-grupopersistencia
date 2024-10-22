@@ -51,7 +51,7 @@ const deleteById = async (req,res) => {
         const componentes = await Componentes.destroy({where: {id}})
         res.status(200).json({message: `Componente ${componentes} eliminado exitosamente`})
     } catch (error){
-        res.status(409).json({error: error.message})
+        res.status(500).json({error: error.message})
     }
     
 }

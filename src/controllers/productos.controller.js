@@ -59,7 +59,7 @@ const deleteById = async (req,res) => {
         res.status(200).json({message: `Producto ${producto} eliminado exitosamente`})
     }catch (error){
         
-        return res.status(409).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
         
     }
     
