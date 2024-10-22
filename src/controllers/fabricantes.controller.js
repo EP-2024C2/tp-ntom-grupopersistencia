@@ -1,4 +1,4 @@
-const {Fabricantes, Productos} = require ('../models')
+const {Componentes, Productos, Fabricantes} = require ('../models')
 const controllerFabricantes = {}
 const fabricantesMiddleware = require('../middlewares/fabricantes.middleware')
 
@@ -71,7 +71,6 @@ const getFabricantesByProducto = async (req,res)=> {
 
     res.status(200).json(producto)
 }
-
 controllerFabricantes.getFabricantesByProducto = getFabricantesByProducto
 
 const createFabricante = async(req,res) => {
@@ -102,7 +101,11 @@ const getProductosPorFabricante = async(req,res) =>{
     const fabricante = await Fabricantes.findByPk(fabricanteId,{
         include: [{
             model: Productos,
-            through: { attributes: [] }
+            through: {attributes: []},
+            include: [{
+                model: Componentes,
+                through: {attributes: []}
+            }]
         }]
     })
     res.status(200).json(fabricante)

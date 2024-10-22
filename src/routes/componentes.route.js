@@ -15,7 +15,7 @@ route.get('/componentes/:id',
 route.post('/componentes', 
     schemaValidator(componenteSchema),
     componentesControllers.createComponentes 
-)
+    )
 
 route.put('/componentes/:id', 
     componenteMiddleware.validateIdComponentes,
@@ -27,9 +27,9 @@ route.delete('/componentes/:id',
     componentesControllers.deleteById, 
     ) 
 
-    route.get('/componentes/:id/productos', 
-        componenteMiddleware.validateIdComponentes,
-        componentesControllers.getComponentesByProducto,
-        )
+route.get('/componentes/:id/productos', 
+    componenteMiddleware.validateIdComponentes,
+    componentesControllers.getProductosPorComponente,
+    )
 
 module.exports = route
