@@ -1,5 +1,6 @@
 const {Fabricantes, Productos} = require ('../models')
 const controllerFabricantes = {}
+const fabricantesMiddleware = require('../middlewares/fabricantes.middleware')
 
 
 const getAllFabricantes = async (req, res) => {
@@ -48,8 +49,14 @@ controllerFabricantes.updateFabricantes = updateFabricantes
 
 const deleteById = async (req,res) => {
     const id = req.params.id
-    const fabricantes = await Fabricantes.destroy({where: {id}})
-    res.status(200).json({message: `Fabricante ${fabricantes} eliminado exitosamente`})
+    try{
+        const fabricante = await Fabricantes.findByPk(id)
+        await fabricantesMiddleware.verificarAsociaciones(fabricante)
+        const fabricantes = await Fabricantes.destroy({where: {id}})
+        res.status(200).json({message: `Fabricante ${fabricantes} eliminado exitosamente`})
+    } catch (error){
+        res.status(409).json({error: error.message})
+    }
 }
 controllerFabricantes.deleteById = deleteById
 

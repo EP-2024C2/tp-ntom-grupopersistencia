@@ -10,6 +10,14 @@ const validateIdFabricante = async (req, res, next)=>{
 }
 middlewareFabricante.validateIdFabricante = validateIdFabricante
 
+const verificarAsociaciones = async (fabricante) => {
+    const productos = await fabricante.getProductos();
+  
+    if (productos.length > 0) {
+      throw new Error('No se puede eliminar el fabricante porque está asociado a productos.');
+    }
+};
 
+middlewareFabricante.verificarAsociaciones = verificarAsociaciones
 
 module.exports = middlewareFabricante

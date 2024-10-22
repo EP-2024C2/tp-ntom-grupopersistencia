@@ -10,6 +10,14 @@ const validateIdComponentes = async (req, res, next)=>{
 }
 middlewareComponentes.validateIdComponentes = validateIdComponentes
 
+const verificarAsociaciones = async (componente) => {
+    const productos = await componente.getProductos();
+  
+    if (productos.length > 0) {
+      throw new Error('No se puede eliminar el componente porque está asociado a productos.');
+    }
+};
 
+middlewareComponentes.verificarAsociaciones = verificarAsociaciones
 
 module.exports = middlewareComponentes

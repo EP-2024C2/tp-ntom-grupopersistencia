@@ -1,4 +1,5 @@
 const {Productos} = require ('../models')
+const productoMiddleware = require('../middlewares/productos.middleware')
 const controller = {}
 
 
@@ -48,8 +49,20 @@ controller.updateProducto = updateProducto
 
 const deleteById = async (req,res) => {
     const id = req.params.id
-    const producto = await Productos.destroy({where: {id}})
-    res.status(200).json({message: `Producto ${producto} eliminado exitosamente`})
+
+    try{
+        const producto = await Productos.findByPk(id);
+
+        await productoMiddleware.verificarAsociaciones(producto)
+        
+        await Productos.destroy({where: {id}})
+        res.status(200).json({message: `Producto ${producto} eliminado exitosamente`})
+    }catch (error){
+        
+        return res.status(409).json({ error: error.message });
+        
+    }
+    
 }
 
 controller.deleteById = deleteById
