@@ -62,7 +62,8 @@ const getComponentesByProducto = async(req,res) => {
     const productoId = req.params.id
     const componentes = await Productos.findByPk(productoId,{
         include: [{
-            model: Componentes
+            model: Componentes,
+            through: { attributes: [] }
         }]
     })
     res.status(200).json(componentes)

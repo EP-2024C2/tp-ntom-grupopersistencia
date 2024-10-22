@@ -64,7 +64,8 @@ const getFabricantesByProducto = async (req,res)=> {
     const id = req.params.id
     const producto = await Productos.findByPk(id,{
         include: [{
-            model: Fabricantes
+            model: Fabricantes,
+            through: { attributes: [] }
         }]
     })
 
@@ -100,7 +101,8 @@ const getProductosPorFabricante = async(req,res) =>{
     const fabricanteId = req.params.id
     const fabricante = await Fabricantes.findByPk(fabricanteId,{
         include: [{
-            model: Productos
+            model: Productos,
+            through: { attributes: [] }
         }]
     })
     res.status(200).json(fabricante)
